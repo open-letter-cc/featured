@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".gitmodules", "licensed.txt", "scripts/**"]
+    paths: [".gitmodules", "licensed.txt", "statements.json", "scripts/**"]
 
 permissions:
   contents: write

@@ -39,6 +39,21 @@ A featured app without this file uses its repo name as the title and its
 GitHub description, falling back to its README's first paragraph. A licensed project must have the
 file, with `"license": "open-letter"`.
 
+## Sponsor statements
+
+`statements.json` holds statements from a featured app's sponsors, shown in the
+app's lightbox on openletter.club. Add one in a PR:
+
+```json
+{
+  "servo": [
+    { "by": "Sponsor name", "text": "Why we back this project.", "date": "2026-11-13", "url": "https://example.org" }
+  ]
+}
+```
+
+`by` and `text` are required (80 and 600 characters max); `url` must be https.
+
 ## featured.json
 
 Generated; don't edit by hand. Run `node scripts/build.mjs` to build it locally

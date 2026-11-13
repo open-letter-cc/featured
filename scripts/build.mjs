@@ -143,6 +143,24 @@ for (const m of parseGitmodules(gm)) {
   });
 }
 
+// --- sponsor statements ----------------------------------------------------------
+// statements.json: { "<app id>": [{ "by": "...", "text": "...", "date": "YYYY-MM-DD", "url": "https://..." }] }
+// Added by the Club in a PR, so moderated by review. Unknown ids are dropped.
+const statements = readJson(join(ROOT, "statements.json")) || {};
+for (const app of featured) {
+  const list = Array.isArray(statements[app.id]) ? statements[app.id] : [];
+  app.statements = list
+    .filter(s => s && typeof s.text === "string" && s.text.trim() && typeof s.by === "string" && s.by.trim())
+    .map(s => ({
+      by: s.by.trim().slice(0, 80),
+      text: s.text.trim().slice(0, 600),
+      date: /^\d{4}-\d{2}-\d{2}$/.test(s.date || "") ? s.date : undefined,
+      url: httpsOnly(s.url),
+    }))
+    .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+}
+for (const id of Object.keys(statements)) if (!featured.some(a => a.id === id)) console.warn(`statements.json: no featured app "${id}"`);
+
 // --- licensed (opt-in) -----------------------------------------------------------
 const licensed = [];
 const listed = existsSync(join(ROOT, "licensed.txt"))

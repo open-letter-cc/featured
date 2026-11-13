@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-13T03:50:46.595Z",
+  "generated": "2026-11-13T04:28:52.507Z",
   "featured": [
     {
       "id": "servo",
@@ -10,7 +10,8 @@
       "commit": "57deea3e142746b1e533510add41d5bdca9aff5b",
       "homepage": "https://servo.org",
       "stars": 0,
-      "updated": "2026-11-11T03:39:07Z"
+      "updated": "2026-11-11T03:39:07Z",
+      "statements": []
     },
     {
       "id": "motor-controller",
@@ -19,7 +20,8 @@
       "repo": "https://github.com/open-letter-cc/motor-controller",
       "commit": "0975be3943831540c4cb363ec492da0e73708330",
       "stars": 0,
-      "updated": "2026-11-06T17:32:46Z"
+      "updated": "2026-11-06T17:32:46Z",
+      "statements": []
     },
     {
       "id": "gitoxide",
@@ -28,7 +30,8 @@
       "repo": "https://github.com/open-letter-cc/gitoxide",
       "commit": "77c8cd956c08a2757318d3a0e6ef30d7fa71286e",
       "stars": 0,
-      "updated": "2026-09-17T16:18:57Z"
+      "updated": "2026-09-17T16:18:57Z",
+      "statements": []
     },
     {
       "id": "isomorphic-git",
@@ -38,7 +41,8 @@
       "commit": "66ae89c3ae33ab4932d75c0e19fd2c45c8ee2630",
       "homepage": "https://isomorphic-git.org",
       "stars": 0,
-      "updated": "2026-09-11T17:18:52Z"
+      "updated": "2026-09-11T17:18:52Z",
+      "statements": []
     },
     {
       "id": "mistral.rs",
@@ -47,7 +51,8 @@
       "repo": "https://github.com/open-letter-cc/mistral.rs",
       "commit": "fb4cdc3730dc64b366724e7637a205a8b7747499",
       "stars": 0,
-      "updated": "2026-11-09T02:43:20Z"
+      "updated": "2026-11-09T02:43:20Z",
+      "statements": []
     }
   ],
   "licensed": []
