@@ -1,1 +1,10 @@
-{}
+{
+  "gitoxide": [
+    {
+      "by": "Open Letter",
+      "text": "This tool lets you use gix like a file system across machines.",
+      "date": "2026-11-13",
+      "url": "https://openletter.club"
+    }
+  ]
+}
