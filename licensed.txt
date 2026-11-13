@@ -1,0 +1,7 @@
+# Open Letter licensed projects, one repository URL per line.
+#
+# To be listed, open a PR adding your repo here. Your repo must have an
+# openletter.json at its root containing "license": "open-letter".
+# The nightly build checks that and skips any entry that doesn't.
+#
+# https://github.com/owner/repo

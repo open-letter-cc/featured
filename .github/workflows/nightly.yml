@@ -1,0 +1,50 @@
+name: nightly
+
+# Moves every featured submodule to the latest commit on its default branch,
+# rebuilds featured.json, and commits both in one commit. The openletter.club
+# homepage reads featured.json; visitors never call the GitHub API.
+
+on:
+  schedule:
+    - cron: "23 3 * * *"   # nightly, off the hour
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".gitmodules", "licensed.txt", "scripts/**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Move submodules to their latest commits
+        run: git submodule update --remote --depth 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build featured.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/build.mjs
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name "openletter-featured[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "nightly: update featured"
+          git push
