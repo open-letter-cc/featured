@@ -6,10 +6,17 @@ commit and rebuilds `featured.json`, which the openletter.club homepage reads.
 
 ## Feature an app
 
+Add it as a submodule. You don't need to clone it; the nightly build never
+checks submodules out, it only moves their pointers:
+
 ```sh
-git submodule add --depth 1 https://github.com/owner/repo apps/repo
-git commit -m "feature: owner/repo"
+git config -f .gitmodules submodule.apps/repo.path apps/repo
+git config -f .gitmodules submodule.apps/repo.url https://github.com/owner/repo
+git update-index --add --cacheinfo 160000,$(git ls-remote https://github.com/owner/repo HEAD | cut -f1),apps/repo
+git add .gitmodules && git commit -m "feature: owner/repo"
 ```
+
+(`git submodule add` works too, it just clones the whole app first.)
 
 ## List an Open Letter licensed project
 

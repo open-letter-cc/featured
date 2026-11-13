@@ -6,8 +6,9 @@
 //
 // Node 20+, no dependencies.
 //
-// featured: read from the checked-out submodule (its openletter.json, else its
-//   README's first heading and paragraph). The REST API adds stars only.
+// featured: openletter.json, else the README's first heading and paragraph,
+//   read as raw files at the pinned commit. Nothing is cloned. The REST API adds
+//   stars only. UPDATE=1 first moves each pointer to the remote's latest commit.
 // licensed: never checked out. openletter.json is fetched from each listed
 //   repo; a repo is listed only if that file says "license": "open-letter".
 
@@ -56,12 +57,7 @@ function readmeSummary(text) {
     if (/^(#|!\[|<|>|\||```|[-*] |\[!)/.test(plain)) { if (started) break; continue; }
     started = true; para.push(plain);
   }
-  return { title, description: para.join(" ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").slice(0, 280) };
-}
-
-function findReadme(dir) {
-  for (const n of ["README.md", "readme.md", "Readme.md", "README"]) if (existsSync(join(dir, n))) return join(dir, n);
-  return null;
+  return { title, description: para.join(" ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*|__|`/g, "").slice(0, 280) };
 }
 
 async function gh(path) {
@@ -70,27 +66,66 @@ async function gh(path) {
   return r.ok ? r.json() : null;
 }
 
-async function rawFile(r, path) {
-  if (OFFLINE || r.host !== "github.com") return null;
-  const resp = await fetch(`https://raw.githubusercontent.com/${r.owner}/${r.repo}/HEAD/${path}`);
+// One file from a repo at a ref, without cloning. Per-host raw URLs.
+function rawUrl(r, ref, path) {
+  if (r.host === "github.com") return `https://raw.githubusercontent.com/${r.owner}/${r.repo}/${ref}/${path}`;
+  if (r.host === "gitlab.com") return `https://gitlab.com/${r.owner}/${r.repo}/-/raw/${ref}/${path}`;
+  if (r.host === "bitbucket.org") return `https://bitbucket.org/${r.owner}/${r.repo}/raw/${ref}/${path}`;
+  return null;
+}
+async function rawFile(r, path, ref = "HEAD") {
+  const u = !OFFLINE && rawUrl(r, ref, path);
+  if (!u) return null;
+  const resp = await fetch(u);
   return resp.ok ? resp.text() : null;
+}
+async function firstRaw(r, names, ref) {
+  for (const n of names) { const t = await rawFile(r, n, ref); if (t) return t; }
+  return null;
+}
+
+// Latest commit on the remote's default branch, without downloading anything.
+function remoteHead(url) {
+  try {
+    const out = execFileSync("git", ["ls-remote", url, "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], timeout: 60000 });
+    return out.split(/\s/)[0] || null;
+  } catch { return null; }
+}
+// The commit the superproject currently pins, from the index.
+function pinned(path) {
+  try {
+    const out = execFileSync("git", ["-C", ROOT, "ls-files", "-s", "--", path], { encoding: "utf8" });
+    return out.split(/\s/)[1] || null;
+  } catch { return null; }
 }
 
 const clean = s => typeof s === "string" ? s.trim().slice(0, 280) : undefined;
 const httpsOnly = s => typeof s === "string" && /^https:\/\//.test(s) ? s : undefined;
 
 // --- featured -----------------------------------------------------------------
+// Submodules are never checked out. With UPDATE=1 (the nightly Action) each
+// pointer moves to the remote's latest commit via ls-remote + update-index;
+// otherwise the pinned commit is used as it is.
+const UPDATE = process.env.UPDATE === "1";
 const featured = [];
 const gm = existsSync(join(ROOT, ".gitmodules")) ? readFileSync(join(ROOT, ".gitmodules"), "utf8") : "";
 for (const m of parseGitmodules(gm)) {
   const r = parseRepo(m.url);
   if (!r) { console.warn(`skip ${m.name}: cannot parse ${m.url}`); continue; }
-  const dir = join(ROOT, m.path);
-  let commit = null;
-  try { commit = execFileSync("git", ["-C", dir, "rev-parse", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch {}
-  const meta = readJson(join(dir, "openletter.json")) || {};
-  const readme = findReadme(dir);
-  const fallback = readme ? readmeSummary(readFileSync(readme, "utf8")) : { title: "", description: "" };
+  let commit = pinned(m.path);
+  if (UPDATE && !OFFLINE) {
+    const head = remoteHead(m.url);
+    if (head && head !== commit) {
+      execFileSync("git", ["-C", ROOT, "update-index", "--cacheinfo", `160000,${head},${m.path}`]);
+      console.log(`${m.path}: ${commit?.slice(0, 7)} -> ${head.slice(0, 7)}`);
+      commit = head;
+    }
+  }
+  const ref = commit || "HEAD";
+  let meta = {};
+  try { meta = JSON.parse(await rawFile(r, "openletter.json", ref) || "{}"); } catch {}
+  const readme = await firstRaw(r, ["README.md", "readme.md", "Readme.md", "README"], ref);
+  const fallback = readme ? readmeSummary(readme) : { title: "", description: "" };
   const api = r.host === "github.com" ? await gh(`/repos/${r.owner}/${r.repo}`) : null;
   featured.push({
     id: m.path.split("/").pop(),

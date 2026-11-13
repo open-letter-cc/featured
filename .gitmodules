@@ -1,0 +1,6 @@
+[submodule "apps/servo"]
+	path = apps/servo
+	url = https://github.com/open-letter-cc/servo
+[submodule "apps/motor-controller"]
+	path = apps/motor-controller
+	url = https://github.com/open-letter-cc/motor-controller
