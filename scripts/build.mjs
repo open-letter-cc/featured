@@ -6,7 +6,8 @@
 //
 // Node 20+, no dependencies.
 //
-// featured: openletter.json, else the README's first heading and paragraph,
+// featured: openletter.json, else the GitHub description, else the README's
+//   first paragraph,
 //   read as raw files at the pinned commit. Nothing is cloned. The REST API adds
 //   stars only. UPDATE=1 first moves each pointer to the remote's latest commit.
 // licensed: never checked out. openletter.json is fetched from each listed
@@ -129,8 +130,10 @@ for (const m of parseGitmodules(gm)) {
   const api = r.host === "github.com" ? await gh(`/repos/${r.owner}/${r.repo}`) : null;
   featured.push({
     id: m.path.split("/").pop(),
-    title: clean(meta.title) || fallback.title || r.repo,
-    description: clean(meta.description) || fallback.description || clean(api?.description) || "",
+    // README headings are unreliable (install steps, badges), so the title is
+    // the repo name unless openletter.json names it.
+    title: clean(meta.title) || r.repo,
+    description: clean(meta.description) || clean(api?.description) || fallback.description || "",
     repo: r.web,
     commit,
     sponsor: httpsOnly(meta.sponsor),

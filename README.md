@@ -35,8 +35,8 @@ title and short description at the bottom of the featured list.
 }
 ```
 
-A featured app without this file falls back to its README's first heading and
-paragraph, then to its GitHub description. A licensed project must have the
+A featured app without this file uses its repo name as the title and its
+GitHub description, falling back to its README's first paragraph. A licensed project must have the
 file, with `"license": "open-letter"`.
 
 ## featured.json

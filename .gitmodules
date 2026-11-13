@@ -4,3 +4,12 @@
 [submodule "apps/motor-controller"]
 	path = apps/motor-controller
 	url = https://github.com/open-letter-cc/motor-controller
+[submodule "apps/gitoxide"]
+	path = apps/gitoxide
+	url = https://github.com/open-letter-cc/gitoxide
+[submodule "apps/isomorphic-git"]
+	path = apps/isomorphic-git
+	url = https://github.com/open-letter-cc/isomorphic-git
+[submodule "apps/mistral.rs"]
+	path = apps/mistral.rs
+	url = https://github.com/open-letter-cc/mistral.rs

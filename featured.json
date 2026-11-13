@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generated": "2026-11-13T03:47:26.102Z",
+  "generated": "2026-11-13T03:50:12.510Z",
   "featured": [
     {
       "id": "servo",
-      "title": "The Servo Parallel Browser Engine Project",
-      "description": "Servo is a prototype web browser engine written in the Rust language. It is currently developed on 64-bit macOS, 64-bit Linux, 64-bit Windows, 64-bit OpenHarmony, and Android.",
+      "title": "servo",
+      "description": "Servo aims to empower developers with a lightweight, high-performance alternative for embedding web technologies in applications.",
       "repo": "https://github.com/open-letter-cc/servo",
       "commit": "57deea3e142746b1e533510add41d5bdca9aff5b",
       "homepage": "https://servo.org",
@@ -20,6 +20,34 @@
       "commit": "0975be3943831540c4cb363ec492da0e73708330",
       "stars": 0,
       "updated": "2026-11-06T17:32:46Z"
+    },
+    {
+      "id": "gitoxide",
+      "title": "gitoxide",
+      "description": "An idiomatic, lean, fast & safe pure Rust implementation of Git",
+      "repo": "https://github.com/open-letter-cc/gitoxide",
+      "commit": "77c8cd956c08a2757318d3a0e6ef30d7fa71286e",
+      "stars": 0,
+      "updated": "2026-09-17T16:18:57Z"
+    },
+    {
+      "id": "isomorphic-git",
+      "title": "isomorphic-git",
+      "description": "A pure JavaScript implementation of git for node and browsers!",
+      "repo": "https://github.com/open-letter-cc/isomorphic-git",
+      "commit": "66ae89c3ae33ab4932d75c0e19fd2c45c8ee2630",
+      "homepage": "https://isomorphic-git.org",
+      "stars": 0,
+      "updated": "2026-09-11T17:18:52Z"
+    },
+    {
+      "id": "mistral.rs",
+      "title": "mistral.rs",
+      "description": "Fast, flexible LLM inference",
+      "repo": "https://github.com/open-letter-cc/mistral.rs",
+      "commit": "fb4cdc3730dc64b366724e7637a205a8b7747499",
+      "stars": 0,
+      "updated": "2026-11-09T02:43:20Z"
     }
   ],
   "licensed": []
