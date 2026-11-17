@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "generated": "2026-11-16T11:47:46.555Z",
+  "generated": "2026-11-17T12:08:34.489Z",
   "featured": [
     {
       "id": "servo",
       "title": "servo",
       "description": "Servo aims to empower developers with a lightweight, high-performance alternative for embedding web technologies in applications.",
       "repo": "https://github.com/open-letter-cc/servo",
-      "commit": "64b8801002b5df26d1c638ff27afe1d9d0cae018",
+      "commit": "8046583309194fe1a52837640977711c9bb7a79f",
       "homepage": "https://servo.org",
       "stars": 0,
-      "updated": "2026-11-15T00:29:14Z",
+      "updated": "2026-11-17T09:38:17Z",
       "statements": []
     },
     {
