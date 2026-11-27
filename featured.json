@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "generated": "2026-11-26T12:55:00.613Z",
+  "generated": "2026-11-27T12:50:11.020Z",
   "featured": [
     {
       "id": "servo",
       "title": "servo",
       "description": "Servo aims to empower developers with a lightweight, high-performance alternative for embedding web technologies in applications.",
       "repo": "https://github.com/open-letter-cc/servo",
-      "commit": "8046583309194fe1a52837640977711c9bb7a79f",
+      "commit": "56c1568527e45cbd90680bbf6ff831429222c95d",
       "homepage": "https://servo.org",
       "stars": 0,
-      "updated": "2026-11-17T09:38:17Z",
+      "updated": "2026-11-27T00:52:48Z",
       "statements": []
     },
     {
@@ -18,9 +18,9 @@
       "title": "motor-controller",
       "description": "A generic, reusable WebView abstraction seam that lets any Rust desktop application embed Servo behind a strongly typed, engine-agnostic interface.",
       "repo": "https://github.com/open-letter-cc/motor-controller",
-      "commit": "0975be3943831540c4cb363ec492da0e73708330",
+      "commit": "3e42de04e1259c115694a00ee92cee305281393d",
       "stars": 0,
-      "updated": "2026-11-06T17:32:46Z",
+      "updated": "2026-11-26T23:26:21Z",
       "statements": []
     },
     {
